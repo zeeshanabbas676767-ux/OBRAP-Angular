@@ -25,7 +25,8 @@ isFixed = false;
 isAdminLoggedIn = false;
    role: Role | null = null;
     currentUser: AuthResponse | null = null;
-
+isDropdownOpen = false;
+  
 constructor (private auth: AuthService,
   private cartService: CartService,
    private router: Router, private orderService: OrderService){
@@ -51,7 +52,17 @@ ngOnInit(): void {
         
 }
 
+toggleDropdown(event: Event) {
+  event.stopPropagation();
+  this.isDropdownOpen = !this.isDropdownOpen;
+}
 
+// Optional: close dropdown if clicked outside
+@HostListener('document:click')
+onDocumentClick() {
+  this.isDropdownOpen = false;
+}
+  
   get isCustomerLoggedIn(): boolean {
     
     return this.currentUser?.role === 'Customer';
