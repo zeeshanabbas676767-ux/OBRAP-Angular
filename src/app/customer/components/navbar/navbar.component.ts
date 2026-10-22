@@ -9,6 +9,7 @@ import { OrderService } from '../../../shared/services/order.service';
 import { Users } from '../../../shared/models/users.model';
 import { Role } from '../../../shared/models/role.model';
 import { AuthResponse } from '../../../shared/models/auth-Responce';
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -49,6 +50,7 @@ ngOnInit(): void {
     });
         
 }
+
 
   get isCustomerLoggedIn(): boolean {
     

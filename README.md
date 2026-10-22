@@ -1,7 +1,7 @@
 
-# SpaceExplorer
+# Frontend_Our_Business_Resource_and_Analytics_Platform_OBRAP
 
-SpaceExplorer is a comprehensive web platform designed for space enthusiasts to explore celestial data and purchase space-themed merchandise. It includes a user-facing portal and a robust administrative dashboard for managing content, products, orders, and universe data.
+Frontend_Our_Business_Resource_and_Analytics_Platform_OBRAP is a comprehensive web platform designed for space enthusiasts to explore celestial data and purchase space-themed merchandise. It includes a user-facing portal and a robust administrative dashboard for managing content, products, orders, and universe data.
 
 ## 🚀 Features
 

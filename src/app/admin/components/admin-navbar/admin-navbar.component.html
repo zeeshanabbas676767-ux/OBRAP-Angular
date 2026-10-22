@@ -1,153 +1,144 @@
-<style>
-  /* Fix body overlap for fixed top navbar */
-body {
-  padding-top: 65px;
-}
-
-/* Nav Links Styling */
-.navbar .nav-link {
-  color: rgba(255, 255, 255, 0.75) !important;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-radius: 6px;
-  transition: all 0.2s ease-in-out;
-}
-
-.navbar .nav-link:hover {
-  color: #ffffff !important;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Active Link Highlight */
-.navbar .nav-link.active {
-  color: #ffffff !important;
-  background-color: #0d6efd;
-  font-weight: 600;
-}
-
-/* Small custom badge styling */
-.fs-7 {
-  font-size: 0.65rem;
-  letter-spacing: 0.5px;
-  vertical-align: middle;
-}
-</style>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top border-bottom border-secondary shadow-sm px-3">
-
-  <div class="container-fluid">
-    
-   <!-- Logo / Brand -->
-    <a class="navbar-brand d-flex align-items-center me-4" routerLink="/admin/dashboard">
-      <i class="mdi mdi-orbit text-info fs-3 me-2"></i>
-      <span class="fw-bold text-white fs-5 tracking-wide">SpaceExplorer</span>
-      <span class="badge bg-primary ms-2 fs-7">ADMIN</span>
+<!-- Top Navbar -->
+<nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+  
+  <!-- Logo Wrapper (Handles full logo vs mini logo during collapse) -->
+  <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+    <a class="navbar-brand brand-logo text-decoration-none" routerLink="/admin/dashboard">
+      <i class="mdi mdi-orbit text-info fs-3 me-1"></i>
+      <span class="fw-bold text-dark fs-5">OBRAP</span>
+      <span class="badge bg-primary ms-1" style="font-size: 0.6rem;">ADMIN</span>
     </a>
+    <a class="navbar-brand brand-logo-mini text-decoration-none" routerLink="/admin/dashboard">
+      <i class="mdi mdi-orbit text-info fs-3"></i>
+    </a>
+  </div>
 
-    <!-- Mobile Menu Toggle Button -->
-    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button> -->
+  <div class="navbar-menu-wrapper d-flex align-items-stretch">
+    <!-- Sidebar Toggle / Minimize Button -->
+    <button class="navbar-toggler navbar-toggler align-self-center" type="button" (click)="toggleSidebar()">
+      <span class="mdi mdi-menu"></span>
+    </button>
 
-    <!-- Navigation items -->
-    <div class="collapse navbar-collapse" id="adminNavbarNav" style="margin-left: 100px;">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1">
-        <li class="nav-item">
-          <a class="nav-link text-light px-2" routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
-        </li> 
-        <li class="nav-item">
-          <a class="nav-link text-light px-2" routerLink="/admin/products" routerLinkActive="active">Space Products</a>
-        </li> 
-        <li class="nav-item">
-          <a class="nav-link text-light px-2" routerLink="/admin/spaceRoles" routerLinkActive="active">Space Roles</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-light px-2" routerLink="/admin/spaceRolesitems" routerLinkActive="active">Space Roles Items</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-light px-2" routerLink="/admin/role" routerLinkActive="active">Role</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-light px-2" routerLink="/admin/category" routerLinkActive="active">Category</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-light px-2" routerLink="/admin/orders" routerLinkActive="active">Orders</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-light px-2" routerLink="/admin/universeData" routerLinkActive="active">Universe Data</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-light px-2" routerLink="/admin/users" routerLinkActive="active">Users</a>
-        </li>
-      </ul>
+    <!-- Search Field -->
+    <div class="search-field d-none d-md-block">
+      <form class="d-flex align-items-center h-100" action="#">
+        <div class="input-group">
+          <div class="input-group-prepend bg-transparent">
+            <i class="input-group-text border-0 mdi mdi-magnify"></i>
+          </div>
+          <input type="text" class="form-control bg-transparent border-0" placeholder="Search here...">
+        </div>
+      </form>
+    </div>
 
-      <!-- Right Action Tools & Profile -->
-      <div class="d-flex align-items-center gap-2">
+    <!-- Right Side Actions & Profile -->
+    <ul class="navbar-nav navbar-nav-right">
+      <!-- Back to Site Button -->
 
-        <a routerLink="/home" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center p-0" style="width: 100px; height: 38px;" title="Back to Site">
-          <i class="fa fa-arrow-left fs-6"></i>Back to Site
+      <li class="nav-item d-none d-md-flex align-items-center me-2">
+
+        <a routerLink="/home" class="btn btn-outline-secondary btn-sm rounded-pill px-3 d-flex align-items-center gap-1">
+          <i class="fa fa-arrow-left"></i> Back
         </a>
-
-        <div class="vr text-secondary mx-2 d-none d-lg-block" style="height: 24px;"></div>
-
-        <!-- Admin Profile -->
+      </li>
+      <!-- Admin Profile / Auth Buttons -->
+      <li class="nav-item nav-profile dropdown">
         <ng-container *ngIf="isLoggedIn; else authButtons">
-          <button 
-            class="btn btn-primary rounded-pill d-flex align-items-center px-3 gap-2" 
-            type="button" 
-            data-bs-toggle="offcanvas" 
-            data-bs-target="#offcanvasNavbar">
-            <i class="fa fa-user-circle fs-5"></i>
-           </button>
+          <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+            <div class="nav-profile-img">
+              <img src="assets/template-admin/images/faces/face1.jpg" alt="profile">
+              <span class="availability-status online"></span>
+            </div>
+            <div class="nav-profile-text d-none d-lg-block">
+              <p class="mb-1 text-black font-weight-bold" style="width: 170px; overflow: auto;">Hi, {{ user?.fullName || 'Admin User' }}</p>
+            </div>
+          </a>
+          
+          <div class="dropdown-menu navbar-dropdown dropdown-menu-end shadow border-0" aria-labelledby="profileDropdown">
+            <div class="dropdown-item py-3 px-4 border-bottom text-center bg-light">
+              <h6 class="fw-bold text-dark mb-1">{{ user?.fullName || 'Administrator' }}</h6>
+              <p class="text-muted small mb-2 text-truncate" style="max-width: 200px;">{{ user?.email || 'admin@obrap.com' }}</p>
+            </div>
+
+            <a class="dropdown-item py-2 px-3 mt-2 text-dark" href="javascript:void(0)">
+              <i class="mdi mdi-cached me-2 text-success"></i> Activity Log
+            </a>
+
+            <div class="dropdown-divider my-1"></div>
+
+            <a class="dropdown-item py-2 px-3 text-danger font-weight-medium" href="javascript:void(0)" (click)="logout()">
+              <i class="mdi mdi-logout me-2 text-danger"></i> Signout
+            </a>
+          </div>
         </ng-container>
 
         <ng-template #authButtons>
-          <div class="d-flex gap-2">
-            <a routerLink="/admin/login" class="btn btn-outline-success btn-sm">Login</a>
-            <a routerLink="/admin/register" class="btn btn-primary btn-sm">Register</a>
+          <div class="d-flex gap-2 align-items-center px-3 py-1">
+            <a routerLink="/admin/login" class="btn btn-outline-success btn-sm px-3">Login</a>
+            <a routerLink="/admin/register" class="btn btn-primary btn-sm px-3">Register</a>
           </div>
         </ng-template>
-      </div>
+      </li>
 
-    </div>
+      <!-- Full Screen Toggle -->
+      <li class="nav-item d-none d-lg-block full-screen-link">
+        <a class="nav-link">
+          <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+        </a>
+      </li>
+
+<!-- Messages Dropdown -->
+      <li class="nav-item dropdown position-relative">
+        <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="mdi mdi-email-outline"></i>
+          <span class="count-symbol bg-warning"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list shadow border-0" aria-labelledby="messageDropdown" style="right: 0; left: auto;">
+          <h6 class="p-3 mb-0">Messages</h6>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item preview-item">
+            <div class="preview-thumbnail">
+              <img src="assets/images/faces/face4.jpg" alt="image" class="profile-pic">
+            </div>
+            <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+              <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message</h6>
+              <p class="text-gray mb-0"> 1 Minutes ago </p>
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+          <h6 class="p-3 mb-0 text-center">4 new messages</h6>
+        </div>
+      </li>
+
+      <!-- Notifications Dropdown -->
+      <li class="nav-item dropdown position-relative">
+        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="mdi mdi-bell-outline"></i>
+          <span class="count-symbol bg-danger"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list shadow border-0" aria-labelledby="notificationDropdown" style="right: 0; left: auto;">
+          <h6 class="p-3 mb-0">Notifications</h6>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item preview-item">
+            <div class="preview-thumbnail">
+              <div class="preview-icon bg-success">
+                <i class="mdi mdi-calendar"></i>
+              </div>
+            </div>
+            <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+              <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
+              <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+          <h6 class="p-3 mb-0 text-center">See all notifications</h6>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" (click)="toggleMobileSidebar()">
+      <span class="mdi mdi-menu"></span>
+    </button>
   </div>
 </nav>
-
-
-<div class="offcanvas offcanvas-end"
-     tabindex="-1"
-     id="offcanvasNavbar"
-     aria-labelledby="offcanvasNavbarLabel">
-
-  <div class="offcanvas-header border-bottom">
-    <h3 class="offcanvas-title fw-bold" id="offcanvasNavbarLabel">
-      My profile 
-    </h3>
-    <button type="button"
-            class="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"></button>
-  </div>
-
-  <div class="offcanvas-body p-0 d-flex flex-column">
-
-    <i class="fa fa-user" style="text-align: center;font-size: 50px;"></i>
-     <div class="text-center p-4">
-       <strong><h5 class="mb-3">{{user?.fullName}}</h5></strong>
-      <h6 class="mb-3">{{user?.email}}</h6>
-      <span class="badge bg-success mb-4">Role: {{ user?.role }}</span>
-    </div>
-
-    <!-- FOOTER TOTAL + BUTTONS -->
-    <div  class="border-top p-3 mt-auto">
-
-  <button class="btn btn-danger w-100 mb-2" (click)="logout()">
-       Logout
-      </button>
-    </div>
- 
-  </div>
-</div>
-
-
-

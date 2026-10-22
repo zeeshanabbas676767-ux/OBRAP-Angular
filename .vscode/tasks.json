@@ -6,7 +6,7 @@
       "type": "shell",
       "command": "dotnet run",
       "options": {
-        "cwd": "D:\\ASP.NET Core Web API Projects\\SpaceExplorer-.NETCore-2026\\NEW_SpaceExplorer_2026"
+        "cwd": "D:\\ASP.NET Core Web API Projects\\Frontend_Our_Business_Resource_and_Analytics_Platform_OBRAP-.NETCore-2026\\Frontend_Our_Business_Resource_and_Analytics_Platform_OBRAP"
       },
       "isBackground": true,
       "problemMatcher": [],
@@ -21,7 +21,7 @@
       "type": "shell",
       "command": "ng serve -o",
       "options": {
-        "cwd": "D:\\All_Angular_Projects\\SpaceExplorer-Angular-2026"
+        "cwd": "D:\\All_Angular_Projects\\Frontend_Our_Business_Resource_and_Analytics_Platform_OBRAP-Angular-2026"
       },
       "isBackground": true,
       "problemMatcher": [],

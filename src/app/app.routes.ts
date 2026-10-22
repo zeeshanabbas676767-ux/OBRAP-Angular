@@ -30,6 +30,7 @@ import { AdminLoginComponent } from './admin/pages/login/login.component';
 
 // Guard
 import { authGuard } from './guards/auth.guard';
+import { ShopDetailComponent } from './customer/pages/shop-detail.component/shop-detail.component';
 
 export const routes: Routes = [
   // 1. Root Redirect
@@ -44,6 +45,7 @@ export const routes: Routes = [
       { path: 'explore-universe', component: exploreUniverseComponent },
       { path: 'cart', component: CartComponent },
       { path: 'shop', component: ShopComponent },
+      { path: 'shop-detail', component: ShopDetailComponent},
       { path: 'about', component: AboutComponent },
       { path: 'checkout', component: CheckoutComponent },
       { path: 'contact', component: ContactComponent },

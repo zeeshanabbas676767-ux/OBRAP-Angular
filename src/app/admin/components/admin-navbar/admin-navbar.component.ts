@@ -1,202 +1,87 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { SpaceRoles } from '../../../shared/models/spaceRoles.model';
-import { SpaceRolesService } from '../../../shared/services/spaceRoles.service';
-import { UniverseDataService } from '../../../shared/services/universeData.service';
-import { UniverseData } from '../../../shared/models/universeData.models';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../../shared/services/auth.service';
-import { Role } from '../../../shared/models/role.model';
 import { AuthResponse } from '../../../shared/models/auth-Responce';
 
 @Component({
   selector: 'app-admin-navbar',
   standalone: true,
-  templateUrl: './admin-navbar.component.html',
-  imports: [RouterLink, CommonModule, FormsModule]
+  imports: [CommonModule, RouterLink],
+  templateUrl: './admin-navbar.component.html'
 })
-export class AdminNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('offcanvasTop') offcanvasElement!: ElementRef;
-
-  spaceRoles: SpaceRoles[] = [];
-  selectedRole: SpaceRoles | null = null;
-  itemList: UniverseData[] = [];
-  
-  isFormOpen: boolean = false;
-  isEditing: boolean = false;
-  currentItem: any = { id: 0, name: '' };
-
-  private offcanvasListener: any;
-
-  isSubmitting: boolean = false;
+export class AdminNavbarComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   isCustomerLoggedIn = false;
-  role: Role | null = null;
- user: AuthResponse | null = null;
+  user: AuthResponse | null = null;
+  
+  private authSub!: Subscription;
 
   constructor(
-    private roleService: SpaceRolesService,
-    private universeDataService: UniverseDataService,
     private auth: AuthService,
     private router: Router
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.loadRoles();
-
     // 1. Immediately hydrate from localStorage if available
-  const storedUser = localStorage.getItem('user');
-  if (storedUser) {
-    try {
-      this.user = JSON.parse(storedUser);
-      this.isLoggedIn = !!this.user;
-    } catch (e) {
-      console.error('Error parsing stored user', e);
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        this.user = JSON.parse(storedUser);
+        this.isLoggedIn = !!this.user;
+        this.isCustomerLoggedIn = this.user?.role === 'Customer';
+      } catch (e) {
+        console.error('Error parsing stored user', e);
+      }
     }
-  }
 
     // 2. Subscribe to reactive updates from AuthService
-  this.auth.user$.subscribe(user => {
-    if (user) {
+    this.authSub = this.auth.user$.subscribe(user => {
       this.user = user;
-      this.isLoggedIn = true;
-      this.isCustomerLoggedIn = user.role === 'Customer';
-    }
-  });
+      this.isLoggedIn = !!user;
+      this.isCustomerLoggedIn = user?.role === 'Customer';
+    });
   }
 
+  get isAdminLoggedIn(): boolean {
+    if (!this.user || !this.user.role) return false;
+    return this.user.role.toLowerCase() === 'admin';
+  }
 
-get isAdminLoggedIn(): boolean {
-if (!this.user || !this.user.role) return false;
-  return this.user.role.toLowerCase() === 'admin';
-}
+  // Toggles mini sidebar mode for desktop
+  toggleSidebar(): void {
+    const isCollapsed = document.body.classList.toggle('sidebar-icon-only');
 
-  logout() {
-  this.auth.logout();
-  this.router.navigate(['/admin/login']);
-}
-
-  ngAfterViewInit(): void {
-    if (this.offcanvasElement && this.offcanvasElement.nativeElement) {
-      this.offcanvasListener = () => this.loadRoles();
-      this.offcanvasElement.nativeElement.addEventListener('show.bs.offcanvas', this.offcanvasListener);
+    if (isCollapsed) {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) {
+        sidebar.scrollTop = 0;
+        const navigation = sidebar.querySelector<HTMLElement>('.nav');
+        if (navigation) {
+          navigation.scrollTop = 0;
+        }
+      }
     }
+  }
+
+  // Toggles sidebar overlay for mobile screens
+  toggleMobileSidebar(): void {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) {
+      sidebar.classList.toggle('active');
+    }
+  }
+
+  
+  logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/admin/login']);
   }
 
   ngOnDestroy(): void {
-    if (this.offcanvasElement && this.offcanvasElement.nativeElement && this.offcanvasListener) {
-      this.offcanvasElement.nativeElement.removeEventListener('show.bs.offcanvas', this.offcanvasListener);
-    }
-  }
-
-  loadRoles(): void {
-    this.roleService.getAll().subscribe({
-      next: (data) => {
-        this.spaceRoles = data;
-        
-        if (this.spaceRoles.length > 0) {
-          const currentSelectedId = this.selectedRole?.id;
-          const match = this.spaceRoles.find(r => r.id === currentSelectedId);
-          this.selectRole(match || this.spaceRoles[0]);
-        } else {
-          this.selectedRole = null;
-          this.itemList = [];
-        }
-      },
-      error: (err) => console.error('Error fetching categories:', err)
-    });
-  }
-
-  selectRole(role: SpaceRoles): void {
-    this.selectedRole = role;
-    this.isFormOpen = false; // Always default to table view when switching roles
-    this.fetchItemsForRole();
-  }
-
-  fetchItemsForRole(): void {
-    if (!this.selectedRole) return;
-
-    this.universeDataService.getAll(1, 100).subscribe({
-      next: (res: any) => {
-        const allData: UniverseData[] = res.data || res;
-        // Strictly filter items matching the active category ID
-        this.itemList = allData.filter(item => Number(item.spaceRoleId) === Number(this.selectedRole?.id));
-      },
-      error: (err) => console.error('Error fetching role objects:', err)
-    });
-  }
-
-  openCreateForm(): void {
-    this.currentItem = { id: 0, name: '' };
-    this.isEditing = false;
-    this.isFormOpen = true;
-  }
-
-  editItem(item: UniverseData): void {
-    this.currentItem = { ...item };
-    this.isEditing = true;
-    this.isFormOpen = true;
-  }
-
-  cancelForm(): void {
-    this.isFormOpen = false;
-  }
-
-saveItem(): void {
-  // Prevent duplicate execution if already submitting
-  if (this.isSubmitting) return;
-  if (!this.currentItem.name?.trim() || !this.selectedRole) return;
-
-  this.isSubmitting = true;
-
-  const formData = new FormData();
-  if (this.isEditing) {
-    formData.append('Id', this.currentItem.id.toString());
-  }
-  formData.append('Name', this.currentItem.name.trim());
-  formData.append('SpaceRoleId', this.selectedRole.id.toString());
-  formData.append('Description', this.currentItem.description ?? 'N/A');
-  formData.append('DistanceFromEarth', (this.currentItem.distanceFromEarth ?? 0).toString());
-  formData.append('Radius', (this.currentItem.radius ?? 0).toString());
-  formData.append('Mass', (this.currentItem.mass ?? 0).toString());
-  formData.append('IsVisibleToNakedEye', String(this.currentItem.isVisibleToNakedEye ?? false));
-
-  if (this.isEditing) {
-    this.universeDataService.update(this.currentItem.id, formData).subscribe({
-      next: () => {
-        this.isSubmitting = false;
-        this.isFormOpen = false;
-        this.fetchItemsForRole();
-      },
-      error: (err) => {
-        this.isSubmitting = false;
-        console.error('Error updating item:', err);
-      }
-    });
-  } else {
-    this.universeDataService.create(formData).subscribe({
-      next: () => {
-        this.isSubmitting = false;
-        this.isFormOpen = false;
-        this.currentItem = { id: 0, name: '' }; // Reset form state
-        this.fetchItemsForRole();
-      },
-      error: (err) => {
-        this.isSubmitting = false;
-        console.error('Error creating item:', err);
-      }
-    });
-  }
-}
-
-  deleteItem(id: number): void {
-    if (confirm('Are you sure you want to delete this object?')) {
-      this.universeDataService.delete(id).subscribe({
-        next: () => this.fetchItemsForRole(),
-        error: (err) => console.error('Error deleting item:', err)
-      });
+    if (this.authSub) {
+      this.authSub.unsubscribe();
     }
   }
 }

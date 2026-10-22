@@ -1,7 +1,21 @@
 
-<app-admin-navbar ></app-admin-navbar>
-<app-admin-sidebar></app-admin-sidebar>
-<div class="container-fluid">
-  <router-outlet></router-outlet>
-</div>
-<app-admin-footer></app-admin-footer>
+  <!-- Top Navbar -->
+  <app-admin-navbar></app-admin-navbar>
+
+  <!-- Page Body Wrapper (Holds Sidebar & Main Content side-by-side) -->
+  <div class="container-fluid page-body-wrapper">
+    
+    <!-- Sidebar -->
+    <app-admin-sidebar></app-admin-sidebar>
+
+    <!-- Main Content Panel -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+      
+      <!-- Footer (Optional) -->
+      <app-admin-footer></app-admin-footer>
+    </div>
+
+  </div>

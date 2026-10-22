@@ -21522,7 +21522,7 @@ code {
   background: #ffffff;
 }
 .card-weather .card-body:first-child {
-  background: url("/assets/images/samples/weather.svg") no-repeat center;
+  background: url("../../images/samples/weather.svg") no-repeat center;
   background-size: cover;
 }
 .card-weather .weather-date-location {
@@ -24934,15 +24934,15 @@ dl li {
 /* === Landing screens === */
 /* Auth */
 .auth .login-half-bg {
-  background: url("/assets/images/auth/login-bg.jpg");
+  background: url("../../images/auth/login-bg.jpg");
   background-size: cover;
 }
 .auth .register-half-bg {
-  background: url("/assets/images/auth/register-bg.jpg");
+  background: url("../../images/auth/register-bg.jpg");
   background-size: cover;
 }
 .auth.lock-full-bg {
-  background: url("/assets/images/auth/lockscreen-bg.jpg");
+  background: url("../../images/auth/lockscreen-bg.jpg");
   background-size: cover;
 }
 .auth .lock-profile-img {
@@ -26035,6 +26035,9 @@ dl li {
     position: relative;
     padding: 0;
   }
+  .sidebar-icon-only .sidebar .nav .nav-item:not(.nav-profile) {
+    display: block;
+  }
   .sidebar-icon-only .sidebar .nav .nav-item .nav-link {
     display: block;
     text-align: center;
@@ -26050,8 +26053,11 @@ dl li {
     border-radius: 5px 0 0 5px;
   }
   .sidebar-icon-only .sidebar .nav .nav-item .nav-link i.menu-icon {
+    display: inline-block;
     margin-right: 0;
     margin-left: 0;
+    visibility: visible;
+    opacity: 1;
   }
   .sidebar-icon-only .sidebar .nav .nav-item .nav-link i.menu-arrow {
     display: none;

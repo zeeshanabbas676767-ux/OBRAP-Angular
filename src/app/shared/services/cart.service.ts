@@ -36,17 +36,17 @@ export class CartService {
   }
       
   // 🔹 Add to cart
-  addToCart(product: Shop): void {
-    const item = this.cartItems.find(i => i.product.id === product.id);
+addToCart(product: Shop, quantity: number = 1): void {
+  const item = this.cartItems.find(i => i.product.id === product.id);
 
-    if (item) {
-      item.quantity++;
-    } else {
-      this.cartItems.push({ product, quantity: 1 });
-    }
-
-    this.updateCart();
+  if (item) {
+    item.quantity += quantity;
+  } else {
+    this.cartItems.push({ product, quantity });
   }
+
+  this.updateCart();
+}
 
   increaseQuantity(productId: number): void {
     const item = this.cartItems.find(i => i.product.id === productId);

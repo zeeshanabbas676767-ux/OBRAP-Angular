@@ -1,5 +1,15 @@
 <app-navbar class="fixed-top"></app-navbar>
 
-  <router-outlet></router-outlet>
+<router-outlet></router-outlet>
+
+<!-- Back to Top Button -->
+<a 
+  href="javascript:void(0)" 
+  class="btn btn-primary border-3 border-primary rounded-circle back-to-top"
+  (click)="scrollToTop()"
+  [class.d-none]="!showBackToTop"
+  title="Back to Top">
+  <i class="fa fa-arrow-up"></i>
+</a> 
 
 <app-footer></app-footer>

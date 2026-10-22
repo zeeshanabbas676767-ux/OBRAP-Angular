@@ -1,119 +1,63 @@
-<style>
-.cart-badge {
-  position: absolute;
-  top: 15px;  
-  right: 8px; 
-  background-color: #ff0000; 
-  color: white;             
-  font-size: 1.0em;         
-  font-weight: bold;        
-  border-radius: 50%;        
-  height: 25px;             
-  width: 25px;              
-  line-height: 25px;       
-  text-align: center;       
-  }
- </style>
+        <!-- Spinner Start -->
+        <!-- <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" role="status"></div>
+        </div> -->
+        <!-- Spinner End -->
 
-   <!-- Topbar -->
-  <div class="top-bar text-white py-2" style="width: 98.8%">
-    <div class="container d-flex justify-content-between align-items-center">
-     <div class="left-top-bar" style="color:aqua">
-DISCLAIMER: SpaceExplorer is ONLY for buisness logics and my own logics NOT for space related information. 
-    </div>
 
-					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Help & FAQs
-						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							My Account
-						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							EN
-						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							USD
-						</a>
-					</div>
-    </div>
-  </div>
-   
-   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="position:fixed;width: 98.8%;">
-    <div class="container-fluid">
-      <!-- Search Field (Left Side) -->
-      <!-- <div class="search-field d-none d-md-block">
-        <form class="d-flex align-items-center">
-          <div class="wrap-input1 w-full p-b-4 d-flex">
-            <span class="input-group-text bg-transparent border-0"><i class="mdi mdi-magnify" style="font-size: 20px;"></i></span>
-            <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="Search anything">
-            <div class="focus-input1 trans-04"></div>
-          </div>
-        </form>
-      </div> -->
-      
-                   <ul class="main-menu">
-                     <li>
-                     <button
-    class="btn btn-link nav-link position-relative"
-    type="button"
-    routerLink="/home"
-  >
-     <i class="mdi mdi-orbit" style="font-size: 30px;">SpaceExplorer</i>
-  </button>
-                  </li>
-							<li class="active-menu">
-								<button routerLink="/home" routerLinkActive="active" class="btn btn-primary" style="border-radius: 20px;">Home</button>
-								<ul class="sub-menu">
-                
-									<li><a routerLink="/home" routerLinkActive="active">Homepage 1</a></li>
-									<li><a href="home-02.html">Homepage 2</a></li>
-									<li><a href="home-03.html">Homepage 3</a></li>
-								</ul>
-							</li>
-
-							<li>
-								<button class="btn btn-primary" style="border-radius: 20px;" routerLink="/explore-universe" routerLinkActive="active">Explore Universe</button>
-							</li>
-              <li>
-								<button class="btn btn-primary" style="border-radius: 20px;" routerLink="/shop" routerLinkActive="active">Shop</button>
-							</li> 
-							<!-- <li>
-								<button class="btn btn-primary" style="border-radius: 20px;" routerLink="/about" routerLinkActive="active">About</button>
-							</li>
-
-							<li>
-								<button class="btn btn-primary" style="border-radius: 20px;" routerLink="/contact" routerLinkActive="active">Contact</button>
-							</li> -->
-
-							<li *ngIf="isAdminLoggedIn">
-								<button class="btn btn-dark" style="border-radius: 20px;" routerLink="/admin" routerLinkActive="active"> Admin</button>
-							</li>
-            <li class="nav-item">
-  <button
-    class="btn btn-link nav-link position-relative"
-    type="button"
-    data-bs-toggle="offcanvas"
+        <!-- Navbar start -->
+        <div class="container-fluid fixed-top">
+            <div class="container topbar bg-primary d-none d-lg-block">
+                <div class="d-flex justify-content-between">
+                    <div class="top-info ps-2">
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
+                    </div>
+                    <div class="top-link pe-2">
+                        <a href="#" routerLink="/privacy-policy" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                        <a href="#" routerLink="/terms-of-use" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                        <a href="#" routerLink="/sales-and-refunds" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
+                    </div>
+                </div>
+            </div>
+            <div class="container px-0">
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                  <a routerLink="/home">
+                    <h1 class="text-primary" style="font-family:'Courier New', Courier, monospace;border-style: dashed;">OBRAP</h1>
+                    </a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="index.html" routerLink="/home" class="nav-item nav-link active">Home</a>
+                            <a href="shop.html" routerLink="/shop" class="nav-item nav-link">Shop</a>
+                            <a href="shop-detail.html" routerLink="/shop-detail" class="nav-item nav-link">Shop Detail</a>
+                            <!-- <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                    <a href="cart.html" routerLink="/cart" class="dropdown-item">Cart</a>
+                                    <a href="checkout.html" routerLink="/checkout" class="dropdown-item">Checkout</a>
+                                    <a href="testimonial.html" routerLink="/testimonial" class="dropdown-item">Testimonial</a>
+                                    <a href="404.html" routerLink="/error404" class="dropdown-item">404 Page</a>
+                                </div>
+                            </div> -->
+                            <a href="contact.html" routerLink="/contact" class="nav-item nav-link">Contact</a>
+                            <a href="#" *ngIf="isAdminLoggedIn"  routerLink="/admin" routerLinkActive="active" class="nav-item nav-link">Admin</a>
+                        </div>
+                        <div class="d-flex m-3 me-0">
+                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
+                           <button class="btn btn-link nav-link position-relative" 
+                           data-bs-toggle="offcanvas"
     data-bs-target="#offcanvasNavbar"
-    aria-controls="offcanvasNavbar"
-  >
-    <i class="mdi mdi-shopping" style="font-size: 30px;"></i>
-
-    <span *ngIf="cartCount > 0"
-          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-      {{ cartCount }}
-    </span>
-  </button>
-</li>
- 
-				 <!-- Profile Dropdown -->
-<li class="nav-item ms-3">
-
-  <!-- LOGGED IN -->
+    aria-controls="offcanvasNavbar">
+                                <i class="fa fa-shopping-bag fa-2x"></i>
+            
+                                <span *ngIf="cartCount > 0" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;"> {{ cartCount }}</span>
+                        </button>
+                        </div>
+                                       <a href="#" class="my-auto">
+                                 <!-- LOGGED IN -->
   <ng-container *ngIf="isLoggedIn">
     <a
       class="nav-link d-flex align-items-center"
@@ -141,7 +85,7 @@ DISCLAIMER: SpaceExplorer is ONLY for buisness logics and my own logics NOT for 
       <div class="dropdown-divider"></div>
 
       <button class="dropdown-item btn-gradient-danger text-dark" style="font-weight: 700;" (click)="logout();">
-        <i class="mdi mdi-logout me-2"></i> Logout
+        <i class="fas fa-sign-out-alt me-2"></i> Logout
       </button>
     </div>
 
@@ -154,11 +98,34 @@ DISCLAIMER: SpaceExplorer is ONLY for buisness logics and my own logics NOT for 
       <a routerLink="/register" class="btn btn-primary">Register</a>
     </div>
   </ng-container>
-</li>
-			</ul>   
-    </div>
-  </nav>
-<div class="offcanvas offcanvas-end"
+                            </a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->
+
+
+        <!-- Modal Search Start -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center">
+                        <div class="input-group w-75 mx-auto d-flex">
+                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Search End -->
+
+        <div class="offcanvas offcanvas-end"
      tabindex="-1"
      id="offcanvasNavbar"
      aria-labelledby="offcanvasNavbarLabel">
@@ -266,11 +233,5 @@ DISCLAIMER: SpaceExplorer is ONLY for buisness logics and my own logics NOT for 
     </div>
  
   </div>
-</div>
+        </div>
 
-
-<style>
-  body { padding-top: 110px; } /* Adjust this value based on your header height */
-  .top-bar { font-size: 13px; }
-  .nav-link { cursor: pointer; }
-</style>
