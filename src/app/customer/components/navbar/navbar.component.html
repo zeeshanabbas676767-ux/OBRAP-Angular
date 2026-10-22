@@ -57,26 +57,27 @@
                         </button>
                         </div>
                                      
-                                 <!-- LOGGED IN -->
-  <ng-container *ngIf="isLoggedIn">
+<ng-container *ngIf="isLoggedIn">
+  <!-- The dropdown container must wrap both the toggle and the menu -->
+  <div class="dropdown my-auto">
     <a
-      class="nav-link d-flex align-items-center"
+      class="nav-link d-flex align-items-center dropdown-toggle"
+      type="button"
+      id="profileDropdown"
       data-bs-toggle="dropdown"
-      href="#" 
+      aria-expanded="false"
     >
       <div 
         class="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center"
-        style="width: 36px; height: 36px; font-weight: bold;" title="{{currentUser?.fullName}}">
-      
-      <i class="fa fa-user"></i>
-       <!-- <strong style="font-size: 20px;">  {{ (currentUser?.fullName) }}</strong>  -->
-       <!-- .slice(0, 2) || '').toUpperCase() -->
+        style="width: 36px; height: 36px; font-weight: bold;" [title]="currentUser?.fullName">
+        <i class="fa fa-user"></i>
       </div>
-     <strong style="margin-left: 10px;"> Hi, {{currentUser?.fullName}}</strong>
+      <strong style="margin-left: 10px;">Hi, {{currentUser?.fullName}}</strong>
     </a> 
 
-    <div class="dropdown-menu dropdown-menu-end shadow p-3" style="width: 250px;border-color: black;" (click)="$event.stopPropagation()">
-       <i class="fa fa-user-circle" style="font-size: 35px; margin-left: 93px;"></i>
+    <!-- Dropdown Menu -->
+    <div class="dropdown-menu dropdown-menu-end shadow p-3" aria-labelledby="profileDropdown" style="width: 250px; border-color: black;" (click)="$event.stopPropagation()">
+      <i class="fa fa-user-circle" style="font-size: 35px; margin-left: 93px; display: block; text-align: center;"></i>
       <div class="text-center mb-2">
         <strong>{{ currentUser?.fullName }}</strong><br>
         <small class="text-dark">{{ currentUser?.email }}</small>
@@ -84,13 +85,12 @@
 
       <div class="dropdown-divider"></div>
 
-      <button class="dropdown-item btn-gradient-danger text-dark" style="font-weight: 700;" (click)="logout();">
+      <button class="dropdown-item btn-gradient-danger text-dark" style="font-weight: 700;" (click)="logout()">
         <i class="fas fa-sign-out-alt me-2"></i> Logout
       </button>
     </div>
-
-  </ng-container>
-
+  </div>
+</ng-container>
   <!-- NOT LOGGED IN --> 
   <ng-container *ngIf="!isLoggedIn">
     <div class="d-flex gap-2">
