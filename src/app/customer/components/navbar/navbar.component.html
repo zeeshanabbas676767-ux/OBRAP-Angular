@@ -57,15 +57,14 @@
                         </button>
                         </div>
                                      
+<!-- LOGGED IN -->
 <ng-container *ngIf="isLoggedIn">
-  <!-- The dropdown container must wrap both the toggle and the menu -->
-  <div class="dropdown my-auto">
+  <div class="dropdown my-auto position-relative" (click)="$event.stopPropagation()">
+    <!-- Toggle Button -->
     <a
       class="nav-link d-flex align-items-center dropdown-toggle"
-      type="button"
-      id="profileDropdown"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
+      role="button"
+      (click)="toggleDropdown($event)"
     >
       <div 
         class="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center"
@@ -75,8 +74,12 @@
       <strong style="margin-left: 10px;">Hi, {{currentUser?.fullName}}</strong>
     </a> 
 
-    <!-- Dropdown Menu -->
-    <div class="dropdown-menu dropdown-menu-end shadow p-3" aria-labelledby="profileDropdown" style="width: 250px; border-color: black;" (click)="$event.stopPropagation()">
+    <!-- Dropdown Menu (Controlled via Angular) -->
+    <div 
+      class="dropdown-menu dropdown-menu-end shadow p-3" 
+      [style.display]="isDropdownOpen ? 'block' : 'none'"
+      style="width: 250px; border-color: black; position: absolute; right: 0; left: auto;"
+    >
       <i class="fa fa-user-circle" style="font-size: 35px; margin-left: 93px; display: block; text-align: center;"></i>
       <div class="text-center mb-2">
         <strong>{{ currentUser?.fullName }}</strong><br>
@@ -85,19 +88,20 @@
 
       <div class="dropdown-divider"></div>
 
-      <button class="dropdown-item btn-gradient-danger text-dark" style="font-weight: 700;" (click)="logout()">
+      <button class="dropdown-item btn-gradient-danger text-dark" style="font-weight: 700;" (click)="logout(); isDropdownOpen = false;">
         <i class="fas fa-sign-out-alt me-2"></i> Logout
       </button>
     </div>
   </div>
 </ng-container>
-  <!-- NOT LOGGED IN --> 
-  <ng-container *ngIf="!isLoggedIn">
-    <div class="d-flex gap-2">
-      <a routerLink="/login" class="btn btn-success">Login</a>
-      <a routerLink="/register" class="btn btn-primary">Register</a>
-    </div>
-  </ng-container>
+
+<!-- NOT LOGGED IN --> 
+<ng-container *ngIf="!isLoggedIn">
+  <div class="d-flex gap-2 my-auto">
+    <a routerLink="/login" class="btn btn-success">Login</a>
+    <a routerLink="/register" class="btn btn-primary">Register</a>
+  </div>
+</ng-container>
                           
                     </div>
                 </nav>
